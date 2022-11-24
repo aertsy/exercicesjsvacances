@@ -59,8 +59,8 @@ jsbApp.choice = document.getElementById('choice')
 jsbApp.playerHand = []
 jsbApp.dealerHand = []
 jsbApp.deck = []
-jsbApp.suits = ['clubs <span class="bold">&#9827</span>', 'diamonds <span class="redcard">&#9830</span>', 'hearts <span class="redcard">&#9829</span>', 'spades <span class="bold">&#9824</span>'];
-jsbApp.values = ["Ace", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Jack", "Queen", "King"]
+jsbApp.suits = ['trèfle <span class="bold">&#9827</span>', 'carreaux <span class="redcard">&#9830</span>', 'coeur <span class="redcard">&#9829</span>', 'pique <span class="bold">&#9824</span>'];
+jsbApp.values = ["As", "Deux", "Trois", "Quatre", "Cinq", "Six", "Sept", "Huit", "Neuf", "Dix", "Valet", "Dame", "Roi"]
 
 function card(suit, value, name) {
     this.suit = suit
@@ -115,8 +115,8 @@ var newGame = function () {
     
     drawHands()
     advise()
-    // jsbApp.buttonBox.classList.remove("hidden")
-    // jsbApp.textUpdates.innerHTML = "The initial hands are dealt!"
+    jsbApp.buttonBox.classList.remove("hidden")
+    jsbApp.textUpdates.innerHTML = "The initial hands are dealt!"
     
 };
 
@@ -130,11 +130,11 @@ var createDeck = function () {
                 cardValue = 10
             }
             if (cardValue != 1) {
-                cardTitle += (jsbApp.values[b] + " of " + jsbApp.suits[a] + " (" + cardValue + ")")
+                cardTitle += (jsbApp.values[b] + " de " + jsbApp.suits[a] + " (" + cardValue + ")")
             }
             else
             {
-                cardTitle += (jsbApp.values[b] + " of " + jsbApp.suits[a] + " (" + cardValue + " or 11)")
+                cardTitle += (jsbApp.values[b] + " de " + jsbApp.suits[a] + " (" + cardValue + " or 11)")
             }
             var newCard = new card(jsbApp.suits[a], cardValue, cardTitle);
             deck.push(newCard)
@@ -157,8 +157,8 @@ var drawHands = function () {
         htmlswap += "<li>" + jsbApp.playerHand[i].name + "</li>"
     }
     htmlswap += "</ul>"
-    // jsbApp.pcards.innerHTML = htmlswap
-    // jsbApp.phandtext.innerHTML = "Your Hand (" + ptotal + ")"
+    jsbApp.pcards.innerHTML = htmlswap
+    jsbApp.phandtext.innerHTML = "Votre main (" + ptotal + ")"
     if (jsbApp.dealerHand.length == 0)
     {
         return
@@ -167,12 +167,12 @@ var drawHands = function () {
     htmlswap = ""
     if (jsbApp.gameStatus === 0)
     {
-        // htmlswap += "<ul><li>[Hidden Card]</li>"
-        // jsbApp.dhandtext.innerHTML = "Dealer's Hand (" + jsbApp.dealerHand[1].value + " + hidden card)"
+        htmlswap += "<ul><li>[Carte cachée]</li>"
+        jsbApp.dhandtext.innerHTML = "Main du croupier (" + jsbApp.dealerHand[1].value + " + carte cachée)"
     }
     else
     {
-        // jsbApp.dhandtext.innerHTML = "Dealer's Hand (" + dtotal + ")";
+        jsbApp.dhandtext.innerHTML = "Dealer's Hand (" + dtotal + ")";
     }
     
     for (var i = 0; i < jsbApp.dealerHand.length; i++) {
@@ -287,7 +287,7 @@ jsbApp.stayButton.addEventListener("click", function stayLoop() {
         var handVal = handTotal(jsbApp.dealerHand)
         jsbApp.gameStatus = 1
         advise()
-        // jsbApp.textUpdates.innerHTML = "The dealer reveals their hidden card";
+        jsbApp.textUpdates.innerHTML = "The dealer reveals their hidden card";
         drawHands()
         setTimeout(stayLoop, 750)
     }
