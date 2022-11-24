@@ -1,0 +1,206 @@
+<!doctype html>
+<html>
+	<head>
+		<title>Manipulations d'images</title>
+		<meta charset="UTF-8" />
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+		<style>
+			html, body{ padding: 0; margin: 0; overflow: hidden; }
+			#appManip{
+				height: 100vh;
+				width: 100vw;
+				user-select: none;
+				overflow: hidden;
+			}
+			.manip{
+				position: absolute;
+				left: 50%;
+				top: 50%;
+				transform: translate(-50%, -50%);
+
+				user-drag: none;
+				-webkit-user-drag: none;
+				user-select: none;
+				-moz-user-select: none;
+				-webkit-user-select: none;
+				-ms-user-select: none;
+				
+			}
+			.manip .img{
+				display: block;
+				max-width: 70vw;
+				max-height: 70vh;
+
+				user-drag: none;
+				-webkit-user-drag: none;
+				user-select: none;
+				-moz-user-select: none;
+				-webkit-user-select: none;
+				-ms-user-select: none;
+			}
+			.manip .zoom{
+				position: absolute;
+				left: 50%;
+				top: 50%;
+				transform: translate(-50%,-50%);
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				height: 3rem;
+				width: 3rem;
+				background: rgba(0,0,0,0.8);
+				opacity: 0;
+				transition: opacity 0.3s ease-in-out;
+			}
+			.manip .zoom svg{
+				width: 50%;
+				height: 50%;
+				fill: white;
+			}
+			.manip .img:hover + .zoom,.manip .zoom:hover{
+				opacity: 1;
+			}
+
+		</style>
+	</head>
+	<body>
+
+
+		<div id="appManip">
+
+			<div class="manip">
+				<img class="img" src="img.jpg" />
+				<div class="zoom"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352c79.5 0 144-64.5 144-144s-64.5-144-144-144S64 128.5 64 208s64.5 144 144 144z"/></svg></div>
+			</div> 
+
+		</div>
+
+		<script type="text/javascript">
+			const app = document.querySelector("#appManip")
+			const manip = app.querySelector(".manip")
+			const manipIMG = manip.querySelector(".img")
+			const manipZoom = manip.querySelector(".zoom")
+
+			let press = false
+			let method = null // "move","zoom","rotate"
+
+
+
+			// Event Rotate
+			app.addEventListener('mousedown',(e)=>{
+				setPos(e)
+				press = true
+				method = "rotate"
+			})
+			const rotateImage = (e) => {
+				var box = manip.getBoundingClientRect()
+				const x = box.width/2 + box.left
+				const y = box.height/2 + box.top
+
+				let radianInit = Math.atan2(mouseX-x,mouseY-y)
+                let rotationInit = - radianInit * 180/Math.PI + 90
+
+				let radian = Math.atan2(e.pageX-x,e.pageY-y)
+                let rotation = - radian * 180/Math.PI + 90 - rotationInit
+				
+				manipIMG.style.transform = `rotate(${rotation + rotate}deg) scale(${scale})`
+
+				rotateTemp = rotation + rotate
+			}
+
+
+
+			// Event Move
+			manipIMG.addEventListener('mousedown',(e)=>{
+				e.stopPropagation()
+				setPos(e)
+				press = true
+				method = "move"
+			})
+			const moveImage = (e) => {
+				var box = manip.getBoundingClientRect()
+				const x = box.width/2 + box.left
+				const y = box.height/2 + box.top
+
+				const movingX = ( e.pageX - mouseX ) / window.innerWidth * 100
+				const movingY = ( e.pageY - mouseY ) / window.innerHeight * 100
+
+				manip.style.left = `${moveX + movingX}%`
+				manip.style.top = `${moveY + movingY}%`
+
+				moveXTemp = moveX + movingX
+				moveYTemp = moveY + movingY
+			}
+
+
+			
+			// Event Zoom
+			manipZoom.addEventListener('mousedown',(e)=>{
+				e.stopPropagation()
+				setPos(e)
+				press = true
+				method = "zoom"
+			})
+			const zoomImage = (e) => {
+
+				var box = manip.getBoundingClientRect()
+				const y = box.height/2 + box.top
+				const zoom = - ( e.pageY - mouseY ) / window.innerHeight * 4
+
+				scaleTemp = Math.min(4,Math.max(0.25,zoom+scale))
+				manipIMG.style.transform = `rotate(${rotate}deg) scale(${scaleTemp})`
+
+			}
+
+
+
+			// STOP Event
+			app.addEventListener('mouseup',(e)=>{
+				press = false
+				method = null
+				rotate = rotateTemp
+				moveX = moveXTemp
+				moveY = moveYTemp
+				scale = scaleTemp
+
+				localStorage.setItem('rotate',rotate)
+				localStorage.setItem('x',moveX)
+				localStorage.setItem('y',moveY)
+				localStorage.setItem('zoom',scale)
+			})
+
+			// Actions on move
+			app.addEventListener('mousemove',(e)=>{
+				if(method=="rotate") rotateImage(e)
+				if(method=="move") moveImage(e)
+				if(method=="zoom") zoomImage(e)
+			})
+			
+			
+			let mouseX, mouseY, moveX = 50, moveY = 50, rotate = 0, scale = 1
+			let moveXTemp = 50,moveYTemp = 50,rotateTemp = 0, scaleTemp = 1
+
+			const setPos = (e) => {
+				mouseX = e.pageX
+				mouseY = e.pageY
+			}
+
+			// Chargement des derniers paramètres de position
+			const loadStorage = () => {
+				if(localStorage.getItem('rotate')) rotate = rotateTemp = parseFloat(localStorage.getItem('rotate'))
+				if(localStorage.getItem('x')) moveX = moveXTemp = parseFloat(localStorage.getItem('x'))
+				if(localStorage.getItem('y')) moveY = moveYTemp = parseFloat(localStorage.getItem('y'))
+				if(localStorage.getItem('zoom')) scale = scaleTemp = parseFloat(localStorage.getItem('zoom'))
+
+				manipIMG.style.transform = `rotate(${rotate}deg) scale(${scale})`
+				manip.style.left = `${moveX}%`
+				manip.style.top = `${moveY}%`
+			}
+			loadStorage()
+
+
+		</script>
+	</body>
+</html>

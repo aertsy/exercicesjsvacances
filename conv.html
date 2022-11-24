@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+<div class="main-box">
+  <h1>Convertisseur</h1>
+
+  <div class="cur-box">
+    <select class="cur-item-1">
+      <option value="AED">AED</option>
+      <option value="ARS">ARS</option>
+      <option value="AUD">AUD</option>
+      <option value="BGN">BGN</option>
+      <option value="BRL">BRL</option>
+      <option value="BSD">BSD</option>
+      <option value="CAD">CAD</option>
+      <option value="CHF">CHF</option>
+      <option value="CLP">CLP</option>
+      <option value="CNY">CNY</option>
+      <option value="COP">COP</option>
+      <option value="CZK">CZK</option>
+      <option value="DKK">DKK</option>
+      <option value="DOP">DOP</option>
+      <option value="EGP">EGP</option>
+      <option value="EUR">EUR</option>
+      <option value="FJD">FJD</option>
+      <option value="GBP">GBP</option>
+      <option value="GTQ">GTQ</option>
+      <option value="HKD">HKD</option>
+      <option value="HRK">HRK</option>
+      <option value="HUF">HUF</option>
+      <option value="IDR">IDR</option>
+      <option value="ILS">ILS</option>
+      <option value="INR">INR</option>
+      <option value="ISK">ISK</option>
+      <option value="JPY">JPY</option>
+      <option value="KRW">KRW</option>
+      <option value="KZT">KZT</option>
+      <option value="MXN">MXN</option>
+      <option value="MYR">MYR</option>
+      <option value="NOK">NOK</option>
+      <option value="NZD">NZD</option>
+      <option value="PAB">PAB</option>
+      <option value="PEN">PEN</option>
+      <option value="PHP">PHP</option>
+      <option value="PKR">PKR</option>
+      <option value="PLN">PLN</option>
+      <option value="PYG">PYG</option>
+      <option value="RON">RON</option>
+      <option value="RUB" selected>RUB</option>
+      <option value="SAR">SAR</option>
+      <option value="SEK">SEK</option>
+      <option value="SGD">SGD</option>
+      <option value="THB">THB</option>
+      <option value="TRY">TRY</option>
+      <option value="TWD">TWD</option>
+      <option value="UAH">UAH</option>
+      <option value="USD">USD</option>
+      <option value="UYU">UYU</option>
+      <option value="VND">VND</option>
+      <option value="ZAR">ZAR</option>
+    </select>
+
+    <input type="number" placeholder="1" class="cur-input-1">
+  </div>
+
+  <div class="change-box">
+    <span class="change-btn"><i class="fas fa-retweet"></i></span>
+    <p class="rate-box">0.00</p>
+  </div>
+
+  <div class="cur-box">
+    <select class="cur-item-2">
+      <option value="AED">AED</option>
+      <option value="ARS">ARS</option>
+      <option value="AUD">AUD</option>
+      <option value="BGN">BGN</option>
+      <option value="BRL">BRL</option>
+      <option value="BSD">BSD</option>
+      <option value="CAD">CAD</option>
+      <option value="CHF">CHF</option>
+      <option value="CLP">CLP</option>
+      <option value="CNY">CNY</option>
+      <option value="COP">COP</option>
+      <option value="CZK">CZK</option>
+      <option value="DKK">DKK</option>
+      <option value="DOP">DOP</option>
+      <option value="EGP">EGP</option>
+      <option value="EUR" selected>EUR</option>
+      <option value="FJD">FJD</option>
+      <option value="GBP">GBP</option>
+      <option value="GTQ">GTQ</option>
+      <option value="HKD">HKD</option>
+      <option value="HRK">HRK</option>
+      <option value="HUF">HUF</option>
+      <option value="IDR">IDR</option>
+      <option value="ILS">ILS</option>
+      <option value="INR">INR</option>
+      <option value="ISK">ISK</option>
+      <option value="JPY">JPY</option>
+      <option value="KRW">KRW</option>
+      <option value="KZT">KZT</option>
+      <option value="MXN">MXN</option>
+      <option value="MYR">MYR</option>
+      <option value="NOK">NOK</option>
+      <option value="NZD">NZD</option>
+      <option value="PAB">PAB</option>
+      <option value="PEN">PEN</option>
+      <option value="PHP">PHP</option>
+      <option value="PKR">PKR</option>
+      <option value="PLN">PLN</option>
+      <option value="PYG">PYG</option>
+      <option value="RON">RON</option>
+      <option value="RUB">RUB</option>
+      <option value="SAR">SAR</option>
+      <option value="SEK">SEK</option>
+      <option value="SGD">SGD</option>
+      <option value="THB">THB</option>
+      <option value="TRY">TRY</option>
+      <option value="TWD">TWD</option>
+      <option value="UAH">UAH</option>
+      <option value="USD">USD</option>
+      <option value="UYU">UYU</option>
+      <option value="VND">VND</option>
+      <option value="ZAR">ZAR</option>
+    </select>
+
+    <input type="number" placeholder="0" class="cur-input-2">
+  </div>
+</div>
+
+<script>
+    const curItem1 = document.querySelector(".cur-item-1")
+const curItem2 = document.querySelector(".cur-item-2")
+const curInput1 = document.querySelector(".cur-input-1")
+const curInput2 = document.querySelector(".cur-input-2")
+
+const rateBox = document.querySelector(".rate-box")
+const changeBtn = document.querySelector(".fa-retweet")
+
+function calc() {
+  const curItem1Value = curItem1.value
+  const curItem2Value = curItem2.value
+
+  fetch(`https://api.exchangerate-api.com/v4/latest/${curItem1Value}`)
+    .then((res) => res.json())
+    .then((data) => {
+      const rate = data.rates[curItem2Value]
+
+      rateBox.textContent = `1 ${curItem1Value} = ${rate.toFixed(
+        4
+      )} ${curItem2Value}`
+
+      curInput2.value = (curInput1.value * rate).toFixed(2)
+    });
+}
+
+function listeners() {
+  curItem1.addEventListener("change", calc)
+  curItem2.addEventListener("change", calc)
+  curInput1.addEventListener("input", calc)
+  curInput2.addEventListener("input", calc)
+
+  changeBtn.addEventListener("click", () => {
+    [curItem1.value, curItem2.value] = [curItem2.value, curItem1.value]
+    calc()
+    changeBtn.classList.toggle("rotate-btn")
+  })
+}
+
+window.onload = () => {
+  listeners()
+  calc()
+}
+</script>
+</body>
+</html>
